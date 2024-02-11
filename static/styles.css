@@ -1,0 +1,98 @@
+/* Добавьте стили для компактного расположения */
+body {
+    background-color: #2c3e50;  /* Сине-темно-серый цвет фона */
+    color: #fff;  /* Белый цвет текста на фоне */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;  /* Уменьшим базовый размер шрифта */
+    line-height: 1.7;  /* Увеличим межстрочный интервал для лучшей читаемости */
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);  /* Прозрачный черный фон контейнера */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);  /* Тень для контейнера */
+}
+
+.container ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Изменено на столбец, чтобы постеры располагались один под другим */
+    gap: 20px;
+}
+
+.container li {
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    position: relative; /* Добавлено позиционирование для кнопки */
+    display: flex; /* Добавлено для правильного позиционирования содержимого */
+    flex-direction: column; /* Изменено на столбец, чтобы элементы располагались один под другим */
+    align-items: center; /* Центрирование по горизонтали */
+}
+
+.container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.container h1 {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.container h2 {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.year-container {
+    font-size: 16px;
+}
+
+.film-description {
+    font-size: 13px; /* Установлен размер шрифта описания фильма */
+    display: none; /* Скрыть описание фильма по умолчанию */
+    text-align: left; /* Выровнять текст описания по левому краю */
+    padding: 1px; /* Добавить отступы для красивого отображения текста */
+}
+
+.watch-button {
+    display: block; /* Разместить кнопку на новой строке */
+    margin: 20px auto; /* Центрировать кнопку по горизонтали и добавить отступы сверху и снизу */
+    padding: 10px 10px; /* Подобрать подходящий размер отступов */
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-size: 16px;  /* Уменьшим размер шрифта для кнопок */
+    background-color: #2c3e50; /* Темно-синий цвет фона */
+    border: 0.5px solid #fff; /* Белая обводка */
+}
+
+.film-rating {
+    position: absolute;
+    top: 147px;
+    right: 8px;
+    background-color: green;
+    color: white;
+    padding: 4px;
+    border-radius: 7px;
+}
+
+#usercard {
+    text-align: center;
+    color: var(--tg-theme-text-color);
+    background: var(--tg-theme-bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+}
