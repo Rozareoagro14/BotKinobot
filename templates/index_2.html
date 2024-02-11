@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека фильмов</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!--Подключаем скрипт от телеграм-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+       <style>
+      body{
+         color: var(--tg-theme-text-color);
+         background: var(--tg-theme-bg-color);
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         font-size: 18px;
+      }
+
+
+
+      #usercard{
+         text-align: center;
+      }
+   </style>
+
+
+</head>
+<body>
+
+   <div class="container">
+      <h1>Библиотека фильмов</h1>
+      <ul>
+         {% for film in shuffle_films(films) %}
+            <li onclick="toggleDescription(this)">
+               <img src="{{ url_for('static', filename=film['afisha_film']) }}" alt="{{ film['Name_film'] }}">
+               <!-- Добавляем рейтинг на картинку-афишу -->
+               <p class="film-rating">{{ film['reiting_film'] }}</p>
+               <h2>{{ film['Name_film'] }} <span class="year-container"><span class="year">(</span>{{ film['Data_film'] }})</span></h2>
+               <p class="film-description">{{ film['Caption_film'] }}
+                  <!-- Передача параметров функции watchFilm средствами шаблонизатора -->
+                  <button class="watch-button" onclick="watchFilm('{{ film['Name_film'] }}', '{{ film['Watch_link'] }}', '{{ film['Fail_ID_film'] }}')">Смотреть</button>
+               </p>
+               <!-- Добавляем информацию о Fail ID Film -->
+               <div class="additional-info" style="display: none;">
+                  <p>Fail ID Film: {{ film['Fail-ID_film'] }}</p>
+               </div>
+            </li>
+         {% endfor %}
+      </ul>
+   </div>
+
+   <div id="usercard"> <!--Карта профиля, человека, который к нам обратился-->
+      <p>Nickname: <span id="nickname"></span></p> <!--Отображение никнейма-->
+      <p>User ID: <span id="userid"></span></p> <!--Отображение user id-->
+   </div>
+
+
+   <script>
+    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+
+    let nickname = document.getElementById("nickname"); //получаем элемент для отображения никнейма
+    nickname.innerText = `${tg.initDataUnsafe.user.username}`; //устанавливаем текст никнейма
+
+    let userid = document.getElementById("userid"); //получаем элемент для отображения user id
+    userid.innerText = `${tg.initDataUnsafe.user.id}`; //устанавливаем текст user id
+   </script>
+
+
+    <script>
+
+
+
+        // Функция для изменения отображения описания фильма
+        function toggleDescription(element) {
+            var description = element.querySelector('.film-description');
+            var additionalInfo = element.querySelector('.additional-info');
+            description.style.display = description.style.display === 'none' ? 'block' : 'none';
+            additionalInfo.style.display = description.style.display === 'none' ? 'none' : 'block';
+        }
+
+    </script>
+</body>
+</html>

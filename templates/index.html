@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека фильмов</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!--Подключаем скрипт от телеграм-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+   <div id="usercard"> <!--Карта профиля, человека, который к нам обратился-->
+      <p>Nickname: <span id="nickname"></span></p> <!--Отображение никнейма-->
+      <p>User ID: <span id="userid"></span></p> <!--Отображение user id-->
+   </div>
+
+   <div class="container">
+      <h1>Библиотека фильмов</h1>
+      <ul>
+         {% for film in shuffle_films(films) %}
+            <li onclick="toggleDescription(this)">
+               <img src="{{ url_for('static', filename=film['afisha_film']) }}" alt="{{ film['Name_film'] }}">
+               <!-- Добавляем рейтинг на картинку-афишу -->
+               <p class="film-rating">{{ film['reiting_film'] }}</p>
+               <h2>{{ film['Name_film'] }} <span class="year-container"><span class="year">(</span>{{ film['Data_film'] }})</span></h2>
+               <p class="film-description">{{ film['Caption_film'] }}
+                  <!-- Передача параметров функции watchFilm средствами шаблонизатора -->
+                  <button class="watch-button" data-fail-id="{{ film['Fail-ID_film'] }}" onclick="watchFilm(this)">Смотреть</button>
+               </p>
+               <!-- Добавляем информацию о Fail ID Film -->
+               <div class="additional-info" style="display: none;">
+                  <p>Fail ID Film: {{ film['Fail-ID_film'] }}</p>
+               </div>
+            </li>
+         {% endfor %}
+      </ul>
+   </div>
+
+   <script>
+    let tg = window.Telegram.WebApp; //получаем объект webapp телеграма
+
+    let nickname = document.getElementById("nickname"); //получаем элемент для отображения никнейма
+    nickname.innerText = `${tg.initDataUnsafe.user.username}`; //устанавливаем текст никнейма
+
+    let userid = document.getElementById("userid"); //получаем элемент для отображения user id
+    userid.innerText = `${tg.initDataUnsafe.user.id}`; //устанавливаем текст user id
+
+    // Функция для изменения отображения описания фильма
+    function toggleDescription(element) {
+        var description = element.querySelector('.film-description');
+        var additionalInfo = element.querySelector('.additional-info');
+        description.style.display = description.style.display === 'none' ? 'block' : 'none';
+        additionalInfo.style.display = description.style.display === 'none' ? 'none' : 'block';
+    }
+
+    // Функция для отправки сообщения с видео
+    async function watchFilm(button) {
+        // Получаем ID пользователя
+        let userId = document.getElementById("userid").innerText;
+
+        // Получаем Fail-ID фильма из атрибута data-fail-id
+        let failId = button.getAttribute('data-fail-id');
+
+        // Отправляем запрос на сервер для отправки сообщения с видео
+        const response = await fetch('/watch-film', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: userId,
+                failId: failId
+            })
+        });
+
+        // Проверяем успешность запроса
+        if (response.ok) {
+            console.log('Видео отправлено пользователю');
+        } else {
+            console.error('Ошибка при отправке видео');
+        }
+    }
+   </script>
+</body>
+</html>

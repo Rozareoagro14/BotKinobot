@@ -1,0 +1,84 @@
+<!-- templates/film_page.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ film_data['Name_film'] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: #2c3e50;  /* Сине-темно-серый цвет фона */
+            color: #fff;  /* Белый цвет текста */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);  /* Прозрачный черный фон контейнера */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);  /* Тень для контейнера */
+        }
+
+        /* Остальные стили оставляем без изменений */
+        h1 {
+            color: #fff;  /* Белый цвет заголовка */
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        p {
+            margin: 5px 0;
+            color: #fff;  /* Белый цвет текста */
+        }
+
+        .back-button,
+        .watch-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #fff;  /* Белый цвет текста */
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover,
+        .watch-button:hover {
+            background-color: rgba(255, 255, 255, 0.7);  /* Прозрачный белый цвет при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ film_data['Name_film'] }} ({{ film_data['Data_film'] }})</h1>
+        <img src="{{ url_for('static', filename=film_data['afisha_film']) }}" alt="{{ film_data['Name_film'] }}">
+        <p>{{ film_data['Description_film'] }}</p>
+        <p><strong>Описание:</strong> {{ film_data['Caption_film'] }}</p>
+        <!-- Добавьте другие данные о фильме, если необходимо -->
+
+        <!-- Кнопка "назад" с использованием стилей класса back-button -->
+        <a class="back-button" href="/">Назад</a>
+
+
+    </div>
+
+    <script>
+        function watchFilm(filmName) {
+            // Выполните здесь действия для отправки названия фильма боту
+            // Например, используйте AJAX-запрос для отправки данных на сервер
+
+            // В данном примере, выводим название фильма в консоль
+            console.log("Название фильма для просмотра: " + filmName);
+        }
+    </script>
+</body>
+</html>
